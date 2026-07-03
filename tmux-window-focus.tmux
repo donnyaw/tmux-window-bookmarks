@@ -4,7 +4,7 @@ set -euo pipefail
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SCRIPTS_DIR="$CURRENT_DIR/scripts"
 
-tmux bind-key s switch-client -T tmux-window-focus
+tmux bind-key s display-message "focus: 1-0 jump | a add | A assign | l list | s show" \; switch-client -T tmux-window-focus
 
 tmux bind-key -T tmux-window-focus 1 run-shell -b "$SCRIPTS_DIR/focus-go.sh 1"
 tmux bind-key -T tmux-window-focus 2 run-shell -b "$SCRIPTS_DIR/focus-go.sh 2"

@@ -63,7 +63,7 @@ tmux source-file ~/.tmux.conf
 
 ### Entering the focus key table
 
-Press **`prefix + s`**. This enters the `tmux-window-focus` key table. A prompt or message will **not** appear by default — you are now in "focus mode."
+Press **`prefix + s`**. This enters the `tmux-window-focus` key table and shows a short help message in the tmux message bar.
 
 ### Key reference
 
