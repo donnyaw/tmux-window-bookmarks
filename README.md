@@ -80,6 +80,8 @@ set -g repeat-time 8000
 | ... | ... |
 | `prefix + s 9` | Jump to slot 9 |
 | `prefix + s 0` | Jump to slot 10 |
+| `prefix + s n` | Jump to next focused window |
+| `prefix + s p` | Jump to previous focused window |
 | `prefix + s a` | Add current window to the first free slot (auto, no duplicates) |
 | `prefix + s A` | Assign current window to a specific slot (prompted) |
 | `prefix + s d` | Delete/clear a specific slot (prompted) |
@@ -89,6 +91,13 @@ set -g repeat-time 8000
 | `prefix + s ?` | Show focus-mode help |
 | `prefix + s c` | Clear all 10 slots (with y/n confirmation) |
 | `prefix + s Esc` | Exit focus key table without action |
+
+Direct cycle shortcuts are also installed:
+
+| Key sequence | Action |
+|---|---|
+| `Alt+Shift+PageDown` | Jump to next focused window |
+| `Alt+Shift+PageUp` | Jump to previous focused window |
 
 ---
 
@@ -123,6 +132,22 @@ When slots 1-5 are filled and you want to promote slot 5 to slot 2:
 1. `prefix + s l`
 2. A floating fzf window shows all occupied slots with preview of their windows.
 3. Type to filter, press Enter to jump.
+
+### Cycle focused windows
+
+Use either focus-mode keys:
+
+```text
+prefix + s n  # next focused window
+prefix + s p  # previous focused window
+```
+
+Or direct shortcuts:
+
+```text
+Alt+Shift+PageDown  # next focused window
+Alt+Shift+PageUp    # previous focused window
+```
 
 ### Show status bar
 
@@ -271,6 +296,7 @@ enters tmux-window-focus key table
   ├── A   → focus-assign.sh N → write to specific slot
   ├── d   → focus-delete.sh N → clear slot
   ├── m   → focus-move.sh from:to → shift entries → reorder
+  ├── n/p → focus-next.sh / focus-prev.sh → cycle registered windows
   ├── l   → focus-list.sh → fzf → select → jump
   ├── s   → focus-show.sh → display-message
   ├── c   → confirm → focus-clear.sh → clear all
