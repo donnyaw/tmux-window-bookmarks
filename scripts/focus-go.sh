@@ -21,11 +21,6 @@ if slot_is_empty "$slot"; then
 fi
 
 target=$(read_slot "$slot")
-if ! tmux has-session -t "$(get_session "$target")" 2>/dev/null; then
-  display_msg "focus slot $slot: session no longer exists"
-  exit 0
-fi
-
 if ! switch_to_window "$target"; then
   display_msg "focus slot $slot: window no longer exists"
   exit 0

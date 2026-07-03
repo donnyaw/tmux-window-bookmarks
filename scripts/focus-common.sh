@@ -10,7 +10,7 @@ ensure_list_file() {
 
   local tmp
   tmp=$(mktemp)
-  awk -v slots="$FOCUS_SLOTS" 'NR <= slots { print } END { for (i = NR + 1; i <= slots; i++) print "" }' "$FOCUS_FILE" > "$tmp"
+  awk -v slots="$FOCUS_SLOTS" 'NR <= slots { print $1 } END { for (i = NR + 1; i <= slots; i++) print "" }' "$FOCUS_FILE" > "$tmp"
   mv "$tmp" "$FOCUS_FILE"
 }
 
@@ -40,7 +40,7 @@ find_first_empty() {
 }
 
 get_current_target() {
-  tmux display-message -p "#{window_id}\t#{session_name}\t#{window_index}"
+  tmux display-message -p "#{window_id}"
 }
 
 count_occupied() {
@@ -76,24 +76,31 @@ display_msg() {
 }
 
 get_window_id() {
-  echo "$1" | cut -f1
+  printf '%s\n' "$1" | awk '{ print $1 }'
 }
 
-get_session() {
-  echo "$1" | cut -f2
+target_exists() {
+  local target="$1"
+  local wid
+  wid=$(get_window_id "$target")
+  tmux display-message -p -t "$wid" '#{window_id}' >/dev/null 2>&1
 }
 
-get_window_index() {
-  echo "$1" | cut -f3
+target_session() {
+  tmux display-message -p -t "$(get_window_id "$1")" '#{session_name}'
+}
+
+target_label() {
+  tmux display-message -p -t "$(get_window_id "$1")" '#{session_name}:#{window_index} #{window_name}'
 }
 
 switch_to_window() {
   local target="$1"
   local wid
   wid=$(get_window_id "$target")
-  if ! tmux display-message -p -t "$wid" '#{window_id}' >/dev/null 2>&1; then
+  if ! target_exists "$wid"; then
     return 1
   fi
-  tmux switch-client -t "$(get_session "$target")"
+  tmux switch-client -t "$(target_session "$wid")"
   tmux select-window -t "$wid"
 }

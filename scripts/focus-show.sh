@@ -10,9 +10,11 @@ parts=""
 for slot in $(seq 1 "$FOCUS_SLOTS"); do
   if ! slot_is_empty "$slot"; then
     target=$(read_slot "$slot")
-    sess=$(get_session "$target")
-    win=$(get_window_index "$target")
-    parts+=" [$slot]${sess}:${win}"
+    if target_exists "$target"; then
+      parts+=" [$slot]$(target_label "$target")"
+    else
+      parts+=" [$slot]stale:$target"
+    fi
   fi
 done
 

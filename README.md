@@ -65,6 +65,12 @@ tmux source-file ~/.tmux.conf
 
 Press **`prefix + s`**. This enters the `tmux-window-focus` key table and shows a short help message in the tmux message bar.
 
+The next key (`a`, `1`, `l`, etc.) must be pressed before tmux's `repeat-time` expires. If tmux returns to the normal key table too quickly, increase it in `~/.tmux.conf`:
+
+```tmux
+set -g repeat-time 3000
+```
+
 ### Key reference
 
 | Key sequence | Action |
@@ -120,7 +126,7 @@ When slots 1-5 are filled and you want to promote slot 5 to slot 2:
 ### Show status bar
 
 1. `prefix + s s`
-2. A message like `focus: [1]work:3 [2]project:1 [4]personal:2` appears briefly.
+2. A message like `focus: [1]work:3 editor [2]project:1 tests` appears briefly.
 
 ---
 
@@ -132,25 +138,25 @@ All focus data is stored in:
 ~/.config/tmux-window-focus/list
 ```
 
-The file is plain text with exactly 10 lines. Each line corresponds to a slot (line 1 = slot 1, etc.). Non-empty lines contain tab-separated fields:
+The file is plain text with exactly 10 lines. Each line corresponds to a slot (line 1 = slot 1, etc.). Non-empty lines contain only one value: tmux `window_id`.
 
 ```
-<window_id>    <session_name>    <window_index>
+<window_id>
 ```
 
 Example:
 ```
-@12    work    3
-@18    project    1
+@12
+@18
 
-@5    personal    2
+@5
 ```
 
-Slots 3, 6-10 are empty (free). You can edit this file manually — the scripts re-read it each time.
+Slots 3, 6-10 are empty (free). You can edit this file manually — the scripts re-read it each time. Session name, window index, and window name are **not stored**; they are resolved live from tmux when showing or jumping to a slot.
 
 ### Why window_id?
 
-tmux assigns a stable `window_id` (like `@12`) to each window at creation. Unlike `session:index`, this identifier does not change when windows are reordered or renumbered. This makes focus targets robust across window management operations.
+tmux assigns a stable `window_id` (like `@12`) to each window at creation. Unlike `session:index`, this identifier does not change when windows are reordered or renumbered. This keeps the focus list window-only and avoids persisting session data.
 
 ---
 
@@ -260,7 +266,7 @@ User presses prefix + s
 enters tmux-window-focus key table
   │
   ├── 1-0 → focus-go.sh N → read slot N → switch to window
-  ├── a   → focus-add.sh  → find empty slot → write current window
+  ├── a   → focus-add.sh  → find empty slot → write current window_id
   ├── A   → focus-assign.sh N → write to specific slot
   ├── d   → focus-delete.sh N → clear slot
   ├── m   → focus-move.sh from:to → shift entries → reorder
@@ -279,7 +285,7 @@ focus-common.sh
   ├── write_slot(N, val)   — write line N
   ├── clear_slot(N)        — empty a slot
   ├── find_first_empty()   — find next free slot
-  ├── get_current_target() — get window_id + session + index
+  ├── get_current_target() — get current window_id only
   ├── switch_to_window()   — switch client + select window
   └── display_msg()        — tmux display-message
 ```

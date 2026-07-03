@@ -21,4 +21,4 @@ if [[ -z "$slot" ]]; then
 fi
 
 write_slot "$slot" "$target"
-display_msg "focused $(get_session "$target"):$(get_window_index "$target") (slot $slot)"
+display_msg "focused $(target_label "$target") (slot $slot)"
