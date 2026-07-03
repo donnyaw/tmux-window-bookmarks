@@ -98,6 +98,8 @@ Direct cycle shortcuts are also installed:
 |---|---|
 | `Alt+Shift+PageDown` | Jump to next focused window |
 | `Alt+Shift+PageUp` | Jump to previous focused window |
+| `Alt+n` | Jump to next focused window |
+| `Alt+p` | Jump to previous focused window |
 
 ---
 
@@ -147,6 +149,8 @@ Or direct shortcuts:
 ```text
 Alt+Shift+PageDown  # next focused window
 Alt+Shift+PageUp    # previous focused window
+Alt+n               # next focused window, more terminal-compatible
+Alt+p               # previous focused window, more terminal-compatible
 ```
 
 ### Show status bar

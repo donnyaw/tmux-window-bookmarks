@@ -7,6 +7,8 @@ SCRIPTS_DIR="$CURRENT_DIR/scripts"
 tmux bind-key s display-message -d 8000 "focus: 1-0 jump | n/p cycle | a add | l list | ? help" \; switch-client -T tmux-window-focus
 tmux bind-key -n M-S-PPage run-shell -b "$SCRIPTS_DIR/focus-prev.sh"
 tmux bind-key -n M-S-NPage run-shell -b "$SCRIPTS_DIR/focus-next.sh"
+tmux bind-key -n M-p run-shell -b "$SCRIPTS_DIR/focus-prev.sh"
+tmux bind-key -n M-n run-shell -b "$SCRIPTS_DIR/focus-next.sh"
 
 tmux bind-key -T tmux-window-focus 1 run-shell -b "$SCRIPTS_DIR/focus-go.sh 1"
 tmux bind-key -T tmux-window-focus 2 run-shell -b "$SCRIPTS_DIR/focus-go.sh 2"
