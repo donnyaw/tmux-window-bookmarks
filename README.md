@@ -118,7 +118,7 @@ The old pre-rename path was:
 ~/.config/tmux-window-focus/list
 ```
 
-On first run, if the new bookmarks list does not exist but the old focus list exists, the plugin copies the old list to the new path. It does not delete the old file.
+On first run, if the new bookmarks list does not exist but the old list (from the pre-rename path) exists, the plugin copies the old list to the new path. It does not delete the old file.
 
 ## Why window_id?
 
