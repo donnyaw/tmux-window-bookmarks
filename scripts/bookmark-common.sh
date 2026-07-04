@@ -1,14 +1,9 @@
-OLD_BOOKMARK_DIR="${HOME}/.config/tmux-window-focus"
-OLD_BOOKMARK_FILE="${OLD_BOOKMARK_DIR}/list"
 BOOKMARK_DIR="${HOME}/.config/tmux-window-bookmarks"
 BOOKMARK_FILE="${BOOKMARK_DIR}/list"
 BOOKMARK_SLOTS=10
 
 ensure_list_file() {
   mkdir -p "$BOOKMARK_DIR"
-  if [[ ! -f "$BOOKMARK_FILE" && -f "$OLD_BOOKMARK_FILE" ]]; then
-    cp "$OLD_BOOKMARK_FILE" "$BOOKMARK_FILE"
-  fi
   if [[ ! -f "$BOOKMARK_FILE" ]]; then
     for _ in $(seq 1 "$BOOKMARK_SLOTS"); do echo ""; done > "$BOOKMARK_FILE"
   fi

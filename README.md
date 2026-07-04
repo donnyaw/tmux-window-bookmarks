@@ -112,13 +112,7 @@ Bookmark data is stored in:
 
 The file has exactly 10 lines. Each line maps to one slot and stores only a tmux `window_id`, such as `@12`.
 
-The old pre-rename path was:
-
-```text
-~/.config/tmux-window-focus/list
-```
-
-On first run, if the new bookmarks list does not exist but the old list (from the pre-rename path) exists, the plugin copies the old list to the new path. It does not delete the old file.
+If you have bookmark data from the previous storage path, the first run copies it automatically to the new path.
 
 ## Why window_id?
 
